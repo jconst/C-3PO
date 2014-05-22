@@ -1,4 +1,5 @@
 secrets.ini
+.DS_Store
 
 # composer
 vendor

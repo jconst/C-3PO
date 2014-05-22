@@ -32,7 +32,7 @@ $sid = $secrets['twilio']['sid'];
 $token = $secrets['twilio']['token']; 
 $client = new Services_Twilio($sid, $token);
 
-$callbk = "http://twiliotranslate.ngrok.com/sayMessage.php?MyParams=" . urlencode($targetLang . '|' . $translated);
+$callbk = "http://c3po.ngrok.com/sayMessage.php?MyParams=" . urlencode($targetLang . '|' . $translated);
 
 $call = $client->account->calls->create("+12487960351", 
 										$receiver, 
