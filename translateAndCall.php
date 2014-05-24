@@ -21,18 +21,25 @@ if ($targetLang != 'en') {
 
 	$queryString = http_build_query($params);
 	$url = $translateEndpoint . '?' . $queryString;
+	echo "url: " . $url . '\n';
 	$response = Requests::get($url);
 	$decoded = json_decode($response->body);
 	$translated = $decoded->data->translations[0]->translatedText;
 }
+echo "translated: " . $translated . '\n';
 
 // CALL AND SEND MESSAGE
 $sid = $secrets['twilio']['sid']; 
 $token = $secrets['twilio']['token']; 
 $client = new Services_Twilio($sid, $token);
 
-$callbk = "http://c3po.jcon.st/sayMessage.php?MyParams=" . urlencode($targetLang . '|' . $translated);
+$serverName = $_SERVER['SERVER_NAME'];
+if ($serverName == '127.0.0.1' || $serverName == 'localhost') {
+	$serverName = "c3po.ngrok.com";
+}
 
+$callbk = "http://" . $serverName . "/sayMessage.php?MyParams=" . urlencode($targetLang . '|' . $translated);
+echo $callbk;
 $call = $client->account->calls->create($secrets['twilio']['number'], 
 										$receiver, 
 										$callbk, 
