@@ -11,7 +11,7 @@ $secrets = parse_ini_file("secrets.ini", true);
 $translateEndpoint = "https://www.googleapis.com/language/translate/v2";
 $langCodes = ['en', 'es', 'fr', 'de', 'it', 'ru', 'sv', 'nl', 'ko', 'zh-CN'];
 $targetLang = $langCodes[intval($langIndex)];
-$translated = $message;
+$translated = $_REQUEST['TranscriptionText'];
 
 if ($targetLang != 'en') {
 	$params = ['source' => 'en',
@@ -31,7 +31,7 @@ $sid = $secrets['twilio']['sid'];
 $token = $secrets['twilio']['token']; 
 $client = new Services_Twilio($sid, $token);
 
-$callbk = "http://c3po.ngrok.com/sayMessage.php?MyParams=" . urlencode($targetLang . '|' . $translated);
+$callbk = "http://c3po.jcon.st/sayMessage.php?MyParams=" . urlencode($targetLang . '|' . $translated);
 
 $call = $client->account->calls->create($secrets['twilio']['number'], 
 										$receiver, 
