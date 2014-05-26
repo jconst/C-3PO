@@ -1,5 +1,5 @@
 <?php
-require_once('vendor/autoload.php');
+require 'vendor/autoload.php';
  
 // Get Parameters
 $args = explode('|', urldecode($_REQUEST['MyParams']));
@@ -21,12 +21,10 @@ if ($targetLang != 'en') {
 
 	$queryString = http_build_query($params);
 	$url = $translateEndpoint . '?' . $queryString;
-	echo "url: " . $url . '\n';
 	$response = Requests::get($url);
 	$decoded = json_decode($response->body);
 	$translated = $decoded->data->translations[0]->translatedText;
 }
-echo "translated: " . $translated . '\n';
 
 // CALL AND SEND MESSAGE
 $sid = $secrets['twilio']['sid']; 
